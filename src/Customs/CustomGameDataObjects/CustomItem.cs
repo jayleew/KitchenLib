@@ -59,12 +59,7 @@ namespace KitchenLib.Customs
         public virtual GameObject SidePrefab { get; protected set; }
         public virtual string ColourBlindTag { get; protected set; }
         public virtual int RewardOverride { get; protected set; } = -1;
-		
-		/// <summary>
-		/// Instantiates a PlateUp Item GameDataObject from this KitchenLib CustomItem
-		/// </summary>
-		/// <param name="gameData">PlateUp GameData</param>
-		/// <param name="gameDataObject">Outputs a PlateUp GDO</param>
+
         public override void Convert(GameData gameData, out GameDataObject gameDataObject)
         {
             Item result = ScriptableObject.CreateInstance<Item>();
@@ -95,7 +90,7 @@ namespace KitchenLib.Customs
 
 			if (!string.IsNullOrEmpty(ColourBlindTag))
 			{
-				Main.LogWarning($"Adding ColourBlindTag '{ColourBlindTag}'");
+				Main.LogError($"Adding ColourBlindTag '{ColourBlindTag}'");
 				Item steak = (Item)GDOUtils.GetExistingGDO(ItemReferences.SteakMedium);
 				if (steak != null)
 				{
@@ -115,11 +110,6 @@ namespace KitchenLib.Customs
 			gameDataObject = result;
         }
 
-		/// <summary>
-		/// Initialializes a PlateUp GDO Item with optional properties.
-		/// </summary>
-		/// <param name="gameData">PlateUp GameData</param>
-		/// <param name="gameDataObject">The GDO to set properties on</param>
         public override void AttachDependentProperties(GameData gameData, GameDataObject gameDataObject)
         {
             Item result = (Item)gameDataObject;
@@ -142,7 +132,7 @@ namespace KitchenLib.Customs
             
             if (SidePrefab == null)
             {
-	            Main.LogWarning($"Assigning fallback side prefab");
+	            Main.LogError($"Assigning fallback side prefab");
 	            SidePrefab = result.Prefab ?? Main.bundle.LoadAsset<GameObject>("Error_Item");
             }
             if (result.Prefab == null)
