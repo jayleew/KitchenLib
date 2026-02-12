@@ -1,6 +1,5 @@
 using KitchenData;
 using KitchenLib.Customs;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -52,17 +51,10 @@ namespace KitchenLib.Utils
 			return result;
 		}
 
-		[Obsolete("Use GDOTypeInstances collection to fetch the first instance of a type.")]
 		public static CustomGameDataObject GetCustomGameDataObject<T>()
-		{			
-			CustomGDO.GDOTypeInstances.TryGetValue(typeof(T), out var result);
-			return result != null ? result.FirstOrDefault() : null;
-		}
-
-		public static List<CustomGameDataObject> GetCustomDataObjectTypeTwins<T>()
 		{
-			CustomGDO.GDOTypeInstances.TryGetValue(typeof(T), out var result);
-			if (result != null) return result; else return new List<CustomGameDataObject>();
+			CustomGDO.GDOsByType.TryGetValue(typeof(T), out var result);
+			return result;
 		}
 
 		public static T GetCastedGDO<T, C>() where T : GameDataObject where C : CustomGameDataObject
